@@ -8,12 +8,18 @@ class Save
     self.load
   end
 
-  def save()
+  def init_file()
     if !File.exist?(SAVE_PATH) || !File.file?(SAVE_PATH) then
       f = File.new(SAVE_PATH, 'w')
       f.write(@data.to_json)
       f.close
 
+      true
+    end
+  end
+
+  def save()
+    if init_file then
       return
     end
     
@@ -23,11 +29,7 @@ class Save
   end
 
   def load()
-    if !File.exist?(SAVE_PATH) || !File.file?(SAVE_PATH) then
-      f = File.new(SAVE_PATH, 'w')
-      f.write(@data.to_json)
-      f.close
-
+    if init_file then
       return
     end
 
